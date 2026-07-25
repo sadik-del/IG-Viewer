@@ -1,0 +1,359 @@
+/* ==========================================
+   Instagram DM Viewer
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:#000;
+    color:#fff;
+    overflow:hidden;
+}
+
+.app{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+/* Message grouping */
+
+.group-start{
+    margin-top:10px;
+}
+
+.group-middle{
+    margin-top:2px;
+}
+
+.group-end{
+    margin-bottom:8px;
+}
+
+.incoming .group-middle,
+.incoming .group-end{
+    border-top-left-radius:8px;
+}
+
+.outgoing .group-middle,
+.outgoing .group-end{
+    border-top-right-radius:8px;
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.header{
+    height:64px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 18px;
+    border-bottom:1px solid #262626;
+    position:sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter:blur(18px);
+    background:rgba(0,0,0,.82);
+}
+
+.left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.back-btn{
+    border:none;
+    background:none;
+    color:white;
+    cursor:pointer;
+    font-size:24px;
+}
+
+.avatar{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.username{
+
+    font-size:15px;
+
+    font-weight:600;
+
+    letter-spacing:.2px;
+
+}
+
+.status{
+    font-size:12px;
+    color:#9d9d9d;
+    margin-top:2px;
+}
+
+.right{
+    display:flex;
+    gap:10px;
+}
+
+.icon-btn{
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:50%;
+    background:#1a1a1a;
+    color:white;
+    cursor:pointer;
+    font-size:18px;
+    transition:.25s;
+}
+
+.icon-btn:hover{
+    background:#303030;
+}
+
+/* ==========================================
+   Chat Area
+========================================== */
+
+#chatContainer{
+    flex:1;
+    overflow-y:auto;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    scroll-behavior:smooth;
+}
+
+#chatContainer::-webkit-scrollbar{
+    width:6px;
+}
+
+#chatContainer::-webkit-scrollbar-thumb{
+    background:#444;
+    border-radius:999px;
+}
+
+/* ==========================================
+   Messages
+========================================== */
+
+.message{
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    max-width:62%;
+
+    animation:messageIn .25s ease-out;
+
+}
+
+.message.incoming{
+    align-self:flex-start;
+}
+
+.message.outgoing{
+    align-self:flex-end;
+}
+
+.bubble{
+    padding:12px 16px;
+    border-radius:22px;
+    font-size:15px;
+    line-height:1.45;
+    word-break:break-word;
+    transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
+    box-shadow:0 4px 18px rgba(0,0,0,.25);
+    position:relative;
+}
+
+.bubble:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 24px rgba(0,0,0,.45);
+
+}
+
+.incoming .bubble{
+
+    background:#262626;
+    color:white;
+
+    border-radius:22px;
+    border-top-left-radius:6px;
+
+}
+
+.outgoing .bubble{
+
+    background:#3797F0;
+    color:white;
+
+    border-radius:22px;
+    border-top-right-radius:6px;
+
+}
+
+.time{
+
+    font-size:11px;
+    color:#8e8e8e;
+    margin-top:3px;
+    padding:0 12px;
+
+    user-select:none;
+
+}
+
+.edited{
+    font-size:11px;
+    color:#8e8e8e;
+    margin-top:3px;
+    font-style:italic;
+}
+
+.reaction{
+
+    position:absolute;
+
+    bottom:-8px;
+
+    right:-8px;
+
+    min-width:24px;
+
+    min-height:24px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:2px 6px;
+
+    background:#1f1f1f;
+
+    border:1px solid #3a3a3a;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.35);
+
+}
+
+
+
+/* ==========================================
+   Date Divider
+========================================== */
+
+.date-divider{
+
+    align-self:center;
+
+    margin:22px 0;
+
+    padding:5px 14px;
+
+    border-radius:999px;
+
+    background:#161616;
+
+    color:#a8a8a8;
+
+    font-size:12px;
+
+    font-weight:500;
+
+}
+
+/* ==========================================
+   Scroll Button
+========================================== */
+
+#scrollBottom{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    width:50px;
+    height:50px;
+    border:none;
+    border-radius:50%;
+    background:#3797F0;
+    color:white;
+    cursor:pointer;
+    font-size:22px;
+    box-shadow:0 0 20px rgba(55,151,240,.45);
+    transition:.2s;
+}
+
+#scrollBottom:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* ==========================================
+   Animations
+========================================== */
+
+@keyframes messageIn{
+
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
+}
+
+/* ==========================================
+   Mobile
+========================================== */
+
+@media(max-width:700px){
+
+    .header{
+        padding:0 12px;
+    }
+
+    .message{
+        max-width:88%;
+    }
+
+    .avatar{
+        width:40px;
+        height:40px;
+    }
+
+    #chatContainer{
+        padding:15px;
+    }
+
+}
